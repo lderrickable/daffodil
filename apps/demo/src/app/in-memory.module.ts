@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { DaffInMemoryDriverModule, DaffInMemoryService } from '@daffodil/driver/in-memory';
+import { DaffInMemoryDriverModule } from './drivers/in-memory/in-memory.module';
+import { DaffInMemoryService } from './drivers/in-memory/in-memory.service';
 
 
 import { environment } from '../environments/environment';

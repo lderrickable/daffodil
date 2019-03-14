@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { environment } from '../environments/environment';
 import { ApolloBoostModule, ApolloBoost } from 'apollo-angular-boost';
-import { DaffShopifyDriverModule } from '@daffodil/driver/shopify';
+import { DaffShopifyDriverModule } from './drivers/shopify/shopify.module';
 
 @NgModule({
   imports: [
