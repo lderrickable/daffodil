@@ -1,3 +1,6 @@
+/**
+ * An interface for cart shipping rate.
+ */
 export interface CartShippingRate {
   rate_id: number;
   address_id: number;

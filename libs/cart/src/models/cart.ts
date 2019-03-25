@@ -2,6 +2,9 @@ import { CartItem } from './cart-item';
 import { CartAddress } from './cart-address';
 import { CartPayment } from './cart-payment';
 
+/**
+ * An interface for a cart.
+ */
 export interface Cart {
   id: number;
   created_at: Date;

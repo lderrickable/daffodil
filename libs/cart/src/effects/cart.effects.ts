@@ -14,6 +14,12 @@ import {
 import { DaffCartDriver } from '../drivers/injection-tokens/cart-driver.token';
 import { DaffCartServiceInterface } from '../drivers/interfaces/cart-service.interface';
 
+/**
+ * Effects for handling cart actions and cart service requests.
+ * 
+ * @param action$ - Redux action object
+ * @param driver - A cart service driver
+ */
 @Injectable()
 export class CartEffects {
 
@@ -21,6 +27,11 @@ export class CartEffects {
     private actions$: Actions,
     @Inject(DaffCartDriver) private driver: DaffCartServiceInterface) {}
 
+  /**
+   * Makes a get cart service call when a CartLoadAction action is triggered.
+   * 
+   * @returns An Observable of a CartAction
+   */
   @Effect()
   load$ : Observable<any> = this.actions$.pipe(
     ofType(CartActionTypes.CartLoadAction),
@@ -37,6 +48,11 @@ export class CartEffects {
     )
   )
 
+  /**
+   * Makes an addToCart service call when an AddToCartAction is triggered.
+   * 
+   * @returns An Observable of a CartAction
+   */
   @Effect()
   addToCart$ = this.actions$.pipe(
     ofType(CartActionTypes.AddToCartAction),

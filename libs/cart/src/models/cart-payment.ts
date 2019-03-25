@@ -1,3 +1,6 @@
+/**
+ * An interface of a cart payment object.
+ */
 export interface CartPayment {
   payment_id: number;
   quote_id: number;

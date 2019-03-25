@@ -1,5 +1,8 @@
 import { ProductImage } from "@daffodil/product";
 
+/**
+ * An interface of a cart item object.
+ */
 export interface CartItem {
   item_id: number;
   image: ProductImage;
