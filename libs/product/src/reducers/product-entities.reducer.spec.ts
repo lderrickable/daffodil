@@ -1,7 +1,7 @@
 import { DaffProductFactory } from '../../testing/src';
 import { ProductLoadSuccess } from "../actions/product.actions";
 import { ProductGridLoadSuccess, ProductGridReset } from "../actions/product-grid.actions";
-import { initialState, reducer } from "../reducers/product-entities.reducer";
+import { initialState, productEntitiesReducer } from "../reducers/product-entities.reducer";
 import { BestSellersLoadSuccess } from "../actions/best-sellers.actions";
 import { Product } from "../models/product";
 
@@ -18,7 +18,7 @@ describe('Product | Product Entities Reducer', () => {
     it('should return the current state', () => {
       const action = {} as any;
 
-      const result = reducer(initialState, action);
+      const result = productEntitiesReducer(initialState, action);
 
       expect(result).toBe(initialState);
     });
@@ -33,7 +33,7 @@ describe('Product | Product Entities Reducer', () => {
       products = productFactory.createMany(2);
       const productGridLoadSuccess = new ProductGridLoadSuccess(products);
       
-      result = reducer(initialState, productGridLoadSuccess);
+      result = productEntitiesReducer(initialState, productGridLoadSuccess);
     });
 
     it('sets expected number of products on state', () => {
@@ -55,7 +55,7 @@ describe('Product | Product Entities Reducer', () => {
       
       const bestSellersLoadSuccess = new BestSellersLoadSuccess(products);
       
-      result = reducer(initialState, bestSellersLoadSuccess);
+      result = productEntitiesReducer(initialState, bestSellersLoadSuccess);
     });
 
     it('sets expected number of products on state', () => {
@@ -79,7 +79,7 @@ describe('Product | Product Entities Reducer', () => {
       
       const productLoadSuccess = new ProductLoadSuccess(product);
       
-      result = reducer(initialState, productLoadSuccess);
+      result = productEntitiesReducer(initialState, productLoadSuccess);
     });
 
     it('sets expected product on state', () => {
@@ -94,7 +94,7 @@ describe('Product | Product Entities Reducer', () => {
     beforeEach(() => {
       const productGridReset = new ProductGridReset();
       
-      result = reducer(initialState, productGridReset);
+      result = productEntitiesReducer(initialState, productGridReset);
     });
 
     it('removes all entities from state', () => {

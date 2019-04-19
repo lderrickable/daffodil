@@ -4,16 +4,15 @@ import { StoreModule, combineReducers, Store } from '@ngrx/store';
 import { By } from '@angular/platform-browser';
 
 import { DaffProductFactory } from '@daffodil/product/testing';
-import { Product } from '@daffodil/product';
+import { Product, productReducer } from '@daffodil/product';
 import { DaffLoadingIconModule } from '@daffodil/design';
-
-// importing from @daffodil/product doesn't work.
-import * as fromProduct from 'libs/product/src/reducers/index';
+import * as fromDaffodilProduct from 'libs/product/src/selectors/product.selectors'
 
 import { AddToCartNotificationComponent } from './add-to-cart-notification.component';
 import * as fromAddToCartNotification from '../../reducers/index';
 import { CloseAddToCartNotification } from '../../actions/add-to-cart-notification.actions';
 import { of } from 'rxjs';
+import { productEntitiesReducer } from 'libs/product/src';
 
 const stubOpen = true;
 const stubProductQty = 1;
@@ -66,10 +65,9 @@ describe('AddToCartNotificationComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          demoCheckout: combineReducers(fromAddToCartNotification.reducers)
-        }),
-        StoreModule.forRoot({
-          product: combineReducers(fromProduct.reducers)
+          demoCheckout: combineReducers(fromAddToCartNotification.reducers),
+          product: combineReducers(productReducer),
+          productEntities: combineReducers(productEntitiesReducer)
         }),
         DaffLoadingIconModule
       ],
@@ -100,7 +98,7 @@ describe('AddToCartNotificationComponent', () => {
     spyOn(fromAddToCartNotification, 'selectProductId').and.returnValue(stubProductId);
     spyOn(fromAddToCartNotification, 'selectCartItemCount').and.returnValue(stubCartItemCount);
     // todo this doesn't seem to actually mock this selector.
-    // spyOn(fromProduct, 'selectProduct').and.returnValue(stubProduct);
+    spyOn(fromDaffodilProduct, 'selectSelectedProduct').and.returnValue(stubProduct);
 
     fixture.detectChanges();
     

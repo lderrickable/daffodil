@@ -4,12 +4,17 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { ProductGridEffects } from './effects/product-grid.effects';
 import { ProductEffects } from './effects/product.effects';
-import { reducers } from './reducers/index';
 import { BestSellersEffects } from './effects/best-seller.effects';
-
+import { productReducer } from './reducers/product.reducer';
+import { productGridReducer } from './reducers/product-grid.reducer';
+import { productEntitiesReducer } from './reducers/product-entities.reducer';
+import { bestSellersReducer } from './reducers/best-sellers.reducer';
 @NgModule({
   imports: [
-      StoreModule.forFeature('product', reducers),
+      StoreModule.forFeature('product', productReducer),
+      StoreModule.forFeature('productGrid', productGridReducer),
+      StoreModule.forFeature('productEntities', productEntitiesReducer),
+      StoreModule.forFeature('bestSellers', bestSellersReducer),
       EffectsModule.forFeature([
         ProductGridEffects,
         ProductEffects,

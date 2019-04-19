@@ -1,10 +1,7 @@
 import { 
   initialState, 
-  reducer, 
-  State,
-  getProductLoading, 
-  getSelectedProductId, 
-  getProductQty 
+  productReducer, 
+  ProductState
 } from "../reducers/product.reducer";
 import { ProductLoad, ProductLoadSuccess, ProductLoadFailure, UpdateQty } from "../actions/product.actions";
 import { Product } from "../models/product";
@@ -28,7 +25,7 @@ describe('Product | Product Reducer', () => {
     it('should return the current state', () => {
       const action = {} as any;
 
-      const result = reducer(initialState, action);
+      const result = productReducer(initialState, action);
 
       expect(result).toBe(initialState);
     });
@@ -40,7 +37,7 @@ describe('Product | Product Reducer', () => {
     beforeEach(() => {
       const productLoadAction: ProductLoad = new ProductLoad(productId);
 
-      result = reducer(initialState, productLoadAction);
+      result = productReducer(initialState, productLoadAction);
     });
 
     it('sets loading state to true', () => {
@@ -55,7 +52,7 @@ describe('Product | Product Reducer', () => {
   describe('when ProductLoadSuccessAction is triggered', () => {
 
     let result;
-    let state: State;
+    let state: ProductState;
 
     beforeEach(() => {
       state = {
@@ -64,7 +61,7 @@ describe('Product | Product Reducer', () => {
       }
 
       const productLoadSuccess = new ProductLoadSuccess(product);
-      result = reducer(state, productLoadSuccess);
+      result = productReducer(state, productLoadSuccess);
     });
 
     it('sets loading to false', () => {
@@ -76,7 +73,7 @@ describe('Product | Product Reducer', () => {
 
     const error = 'error message';
     let result;
-    let state: State;
+    let state: ProductState;
 
     beforeEach(() => {
       state = {
@@ -87,7 +84,7 @@ describe('Product | Product Reducer', () => {
 
       const productLoadFailure = new ProductLoadFailure(error);
 
-      result = reducer(state, productLoadFailure);
+      result = productReducer(state, productLoadFailure);
     });
 
     it('sets loading to false', () => {
@@ -108,32 +105,11 @@ describe('Product | Product Reducer', () => {
       givenQty = 3;
       const productLoadFailure = new UpdateQty(givenQty);
 
-      result = reducer(initialState, productLoadFailure);
+      result = productReducer(initialState, productLoadFailure);
     });
 
     it('sets qty to payload', () => {
       expect(result.qty).toEqual(givenQty);
-    });
-  });
-
-  describe('getSelectedProductId', () => {
-    
-    it('returns selectedProductId', () => {
-      expect(getSelectedProductId(initialState)).toEqual(initialState.selectedProductId);
-    });
-  });
-
-  describe('getProductQty', () => {
-    
-    it('returns selectedProductId', () => {
-      expect(getProductQty(initialState)).toEqual(initialState.qty);
-    });
-  });
-
-  describe('getProductLoading', () => {
-    
-    it('returns loading state', () => {
-      expect(getProductLoading(initialState)).toEqual(initialState.loading);
     });
   });
 });

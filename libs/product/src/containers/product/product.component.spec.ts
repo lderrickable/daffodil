@@ -4,11 +4,11 @@ import { Store, StoreModule, combineReducers } from '@ngrx/store';
 import { By } from '@angular/platform-browser';
 
 import { DaffProductFactory } from '../../../testing/src';
-
 import { ProductContainer } from './product.component';
 import { ProductLoad, UpdateQty } from '../../actions/product.actions';
-import * as fromProduct from '../../reducers/index';
+import * as fromProduct from '../../selectors/product.selectors';
 import { Product } from '../../models/product';
+import { productReducer } from '../../reducers/product.reducer';
 
 @Component({template: '<div product-container #ProductContainer="ProductContainer" [selectedProductId]="selectedProductIdValue"></div>'})
 class WrapperComponent {
@@ -29,7 +29,7 @@ describe('ProductContainer', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          products: combineReducers(fromProduct.reducers),
+          product: combineReducers(productReducer),
         })
       ],
       declarations: [ 
@@ -51,9 +51,9 @@ describe('ProductContainer', () => {
 
     component.selectedProductIdValue = initialProduct.id;
 
-    spyOn(fromProduct, 'selectSelectedProductLoadingState').and.returnValue(initialLoading);
+    spyOn(fromProduct, 'selectProductLoadingState').and.returnValue(initialLoading);
     spyOn(fromProduct, 'selectSelectedProduct').and.returnValue(initialProduct);
-    spyOn(fromProduct, 'selectSelectedProductQty').and.returnValue(initialQty);
+    spyOn(fromProduct, 'selectProductQty').and.returnValue(initialQty);
     spyOn(store, 'dispatch');
 
     fixture.detectChanges();

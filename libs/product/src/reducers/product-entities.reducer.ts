@@ -1,19 +1,19 @@
-import { createEntityAdapter, EntityState, EntityAdapter, Dictionary } from '@ngrx/entity';
+import { createEntityAdapter, EntityState, EntityAdapter } from '@ngrx/entity';
 
 import { ProductGridActionTypes, ProductGridActions } from '../actions/product-grid.actions';
 import { ProductActionTypes, ProductActions } from '../actions/product.actions';
 import { BestSellersActionTypes, BestSellersActions } from '../actions/best-sellers.actions';
 import { Product } from '../models/product';
 
-export interface State extends EntityState<Product> {}
+export interface ProductEntitiesState extends EntityState<Product> {}
 
 export const productAdapter : EntityAdapter<Product> = createEntityAdapter<Product>();
 
-export const initialState: State = productAdapter.getInitialState();
+export const initialState: ProductEntitiesState = productAdapter.getInitialState();
 
-export function reducer(
+export function productEntitiesReducer(
   state = initialState, 
-  action: ProductGridActions | BestSellersActions | ProductActions): State {
+  action: ProductGridActions | BestSellersActions | ProductActions): ProductEntitiesState {
   switch (action.type) {
     case ProductGridActionTypes.ProductGridLoadSuccessAction:
       return productAdapter.upsertMany(action.payload, state);
@@ -33,13 +33,3 @@ export function reducer(
       return state;
   }
 }
-
-const { selectIds, selectEntities, selectAll, selectTotal } = productAdapter.getSelectors();
-
-export const selectProductIds = selectIds;
-
-export const selectProductEntities : (state: EntityState<Product>) => Dictionary<Product> = selectEntities;
-
-export const selectAllProducts = selectAll;
-
-export const selectProductTotal = selectTotal;

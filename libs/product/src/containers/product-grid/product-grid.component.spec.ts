@@ -4,8 +4,11 @@ import { Store, StoreModule, combineReducers } from '@ngrx/store';
 import { ProductGridContainer } from './product-grid.component';
 import { DaffProductFactory } from '../../../testing/src';
 import { ProductGridLoad } from '../../actions/product-grid.actions';
-import * as fromProduct from '../../reducers/index';
+import * as fromProductGrid from '../../selectors/product-grid.selectors';
+import * as fromProductEntities from '../../selectors/product-entities.selectors';
 import { Product } from '../../models/product';
+import { productGridReducer } from '../../reducers/product-grid.reducer';
+import { productEntitiesReducer } from '../../reducers/product-entities.reducer';
 
 describe('ProductGridContainer', () => {
   let component: ProductGridContainer;
@@ -19,7 +22,8 @@ describe('ProductGridContainer', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          products: combineReducers(fromProduct.reducers),
+          productGrid: combineReducers(productGridReducer),
+          productEntities: combineReducers(productEntitiesReducer),
         })
       ],
       declarations: [ ProductGridContainer ]
@@ -35,8 +39,8 @@ describe('ProductGridContainer', () => {
     initialLoading = false;
     initialProducts = new Array(productFactory.create());
 
-    spyOn(fromProduct, 'selectProductGridLoadingState').and.returnValue(initialLoading);
-    spyOn(fromProduct, 'selectAllProducts').and.returnValue(initialProducts);
+    spyOn(fromProductGrid, 'selectProductGridLoadingState').and.returnValue(initialLoading);
+    spyOn(fromProductEntities, 'selectAllProducts').and.returnValue(initialProducts);
     spyOn(store, 'dispatch');
 
     fixture.detectChanges();

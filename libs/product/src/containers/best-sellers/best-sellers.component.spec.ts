@@ -3,9 +3,11 @@ import { Store, StoreModule, combineReducers, select } from '@ngrx/store';
 
 import { BestSellersContainer } from './best-sellers.component';
 import { BestSellersLoad } from '../../actions/best-sellers.actions';
-import * as fromProduct from '../../reducers/index';
+import * as fromBestSellers from '../../selectors/best-sellers.selectors';
+import * as fromProductEntities from '../../selectors/product-entities.selectors';
 import { Product } from '../../models/product';
 import { DaffProductFactory } from '../../../testing/src';
+import { bestSellersReducer } from '../../reducers/best-sellers.reducer';
 
 describe('BestSellersContainer', () => {
   let component: BestSellersContainer;
@@ -20,7 +22,7 @@ describe('BestSellersContainer', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          products: combineReducers(fromProduct.reducers),
+          bestSellers: combineReducers(bestSellersReducer),
         })
       ],
       declarations: [ BestSellersContainer ]
@@ -37,9 +39,9 @@ describe('BestSellersContainer', () => {
     initialProducts = new Array(productFactory.create(), productFactory.create());
     bestSeller = initialProducts[1];
 
-    spyOn(fromProduct, 'selectBestSellersLoadingState').and.returnValue(initialLoading);
-    spyOn(fromProduct, 'selectAllProducts').and.returnValue(initialProducts);
-    spyOn(fromProduct, 'selectBestSellersIdsState').and.returnValue([bestSeller.id]);
+    spyOn(fromBestSellers, 'selectBestSellersLoadingState').and.returnValue(initialLoading);
+    spyOn(fromProductEntities, 'selectAllProducts').and.returnValue(initialProducts);
+    spyOn(fromBestSellers, 'selectBestSellersIdsState').and.returnValue([bestSeller.id]);
     spyOn(store, 'dispatch');
 
     fixture.detectChanges();
@@ -62,9 +64,9 @@ describe('BestSellersContainer', () => {
     });
 
     it('sets bestSellers', () => {
-      store.pipe(select(fromProduct.selectAllProducts)).subscribe();
+      store.pipe(select(fromProductEntities.selectAllProducts)).subscribe();
 
-      store.pipe(select(fromProduct.selectBestSellersIdsState)).subscribe(() => {
+      store.pipe(select(fromBestSellers.selectBestSellersIdsState)).subscribe(() => {
         expect(component.bestSellers).toEqual([bestSeller]);
       });
     });

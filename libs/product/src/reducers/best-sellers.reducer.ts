@@ -1,21 +1,21 @@
 import { BestSellersActionTypes, BestSellersActions } from '../actions/best-sellers.actions';
 import { Product } from '../models/product';
 
-export interface State {
+export interface BestSellersState {
   productIds: string[],
   loading: boolean,
   errors: string[]
 }
 
-export const initialState: State = {
+export const initialState: BestSellersState = {
   productIds: [],
   loading: false,
   errors: []
 };
 
-export const resetState: State = Object.assign({}, initialState);
+export const resetState: BestSellersState = Object.assign({}, initialState);
 
-export function reducer(state = initialState, action: BestSellersActions): State {
+export function bestSellersReducer(state = initialState, action: BestSellersActions): BestSellersState {
   switch (action.type) {
     case BestSellersActionTypes.BestSellersLoadAction:
       return {...state, loading: true};
@@ -34,10 +34,6 @@ export function reducer(state = initialState, action: BestSellersActions): State
       return state;
   }
 }
-
-export const getBestSellersIds = (state: State) => state.productIds;
-
-export const getBestSellersLoading = (state: State) => state.loading;
 
 function getIds(products: Product[]): string[] {
   const ids: string[] = new Array();

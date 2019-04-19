@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { Product, fromProduct } from '@daffodil/product';
+import { Product, selectSelectedProduct } from '@daffodil/product';
 
 import * as fromDemoAddToCartNotification from '../../reducers/index';
 import { CloseAddToCartNotification } from '../../actions/add-to-cart-notification.actions';
@@ -53,7 +53,7 @@ export class AddToCartNotificationComponent implements OnInit {
     
     this.productId$.subscribe((productId) => {
       this.product$ = this.store.pipe(
-        select(fromProduct.selectProduct, {id: productId})
+        select(selectSelectedProduct, {id: productId})
       );
     });
   }

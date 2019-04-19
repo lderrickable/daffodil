@@ -1,20 +1,20 @@
 import { ProductActionTypes, ProductActions } from '../actions/product.actions';
 
-export interface State {
+export interface ProductState {
   selectedProductId: string,
   qty: number,
   loading: boolean,
   errors: string[]
 }
 
-export const initialState: State = {
+export const initialState: ProductState = {
   selectedProductId: null,
   qty: 1,
   loading: false,
   errors: []
 };
 
-export function reducer(state = initialState, action: ProductActions): State {
+export function productReducer(state = initialState, action: ProductActions): ProductState {
   switch (action.type) {
     case ProductActionTypes.ProductLoadAction:
       return {...state, loading: true, selectedProductId: action.payload};
@@ -31,9 +31,3 @@ export function reducer(state = initialState, action: ProductActions): State {
       return state;
   }
 }
-
-export const getSelectedProductId = (state: State) => state.selectedProductId;
-
-export const getProductQty = (state: State) => state.qty;
-
-export const getProductLoading = (state: State) => state.loading;

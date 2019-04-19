@@ -1,6 +1,6 @@
 import { DaffProductFactory } from '../../testing/src';
 import { ProductGridLoad, ProductGridLoadSuccess, ProductGridLoadFailure } from "../actions/product-grid.actions";
-import { initialState, reducer, getProductGridLoading, State } from "../reducers/product-grid.reducer";
+import { initialState, productGridReducer, ProductGridState } from "../reducers/product-grid.reducer";
 import { Product } from "../models/product";
 
 describe('Product | Product Grid Reducer', () => {
@@ -19,7 +19,7 @@ describe('Product | Product Grid Reducer', () => {
     it('should return the current state', () => {
       const action = {} as any;
 
-      const result = reducer(initialState, action);
+      const result = productGridReducer(initialState, action);
 
       expect(result).toBe(initialState);
     });
@@ -30,7 +30,7 @@ describe('Product | Product Grid Reducer', () => {
     it('sets loading state to true', () => {
       const productGridLoadAction: ProductGridLoad = new ProductGridLoad();
       
-      const result = reducer(initialState, productGridLoadAction);
+      const result = productGridReducer(initialState, productGridLoadAction);
 
       expect(result.loading).toEqual(true);
     });
@@ -40,7 +40,7 @@ describe('Product | Product Grid Reducer', () => {
 
     let products: Product[];
     let result;
-    let state: State;
+    let state: ProductGridState;
 
     beforeEach(() => {
       state = {
@@ -50,7 +50,7 @@ describe('Product | Product Grid Reducer', () => {
       products = new Array(product);
       const productGridLoadSuccess = new ProductGridLoadSuccess(products);
       
-      result = reducer(state, productGridLoadSuccess);
+      result = productGridReducer(state, productGridLoadSuccess);
     });
 
     it('sets loading to false', () => {
@@ -62,7 +62,7 @@ describe('Product | Product Grid Reducer', () => {
 
     let error: string;
     let result;
-    let state: State;
+    let state: ProductGridState;
 
     beforeEach(() => {
       state = {
@@ -73,7 +73,7 @@ describe('Product | Product Grid Reducer', () => {
       
       error = 'error';      
       const productGridLoadFailure = new ProductGridLoadFailure(error);
-      result = reducer(state, productGridLoadFailure);
+      result = productGridReducer(state, productGridLoadFailure);
     });
 
     it('sets loading to false', () => {
@@ -82,13 +82,6 @@ describe('Product | Product Grid Reducer', () => {
 
     it('adds an error to state.errors', () => {
       expect(result.errors.length).toEqual(2);
-    });
-  });
-
-  describe('getProductGridLoading', () => {
-    
-    it('returns loading state', () => {
-      expect(getProductGridLoading(initialState)).toEqual(initialState.loading);
     });
   });
 });

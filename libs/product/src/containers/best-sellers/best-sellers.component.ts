@@ -2,9 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Observable ,  combineLatest } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 
-import * as fromProduct from '../../reducers/index';
 import { BestSellersLoad } from '../../actions/best-sellers.actions';
 import { Product } from '../../models/product';
+import { ProductEntitiesState } from '../../reducers/product-entities.reducer';
+import { BestSellersState } from '../../reducers/best-sellers.reducer';
+import { selectBestSellersLoadingState, selectBestSellersIdsState } from '../../selectors/best-sellers.selectors';
+import { selectAllProducts } from '../../selectors/product-entities.selectors';
 
 @Component({
   selector: '[best-sellers-container]',
@@ -17,13 +20,14 @@ export class BestSellersContainer implements OnInit {
   bestSellers: Product[];
 
   constructor(
-    private store: Store<fromProduct.State>
+    private productEntitesStore: Store<ProductEntitiesState>,
+    private bestSellersStore: Store<BestSellersState>
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new BestSellersLoad());
+    this.bestSellersStore.dispatch(new BestSellersLoad());
 
-    this.loading$ = this.store.pipe(select(fromProduct.selectBestSellersLoadingState));
+    this.loading$ = this.bestSellersStore.pipe(select(selectBestSellersLoadingState));
 
     combineLatest(
       this.getProducts(), this.getBestSellersIds()
@@ -41,10 +45,10 @@ export class BestSellersContainer implements OnInit {
   }
 
   private getProducts(): Observable<Product[]> {
-    return this.store.pipe(select(fromProduct.selectAllProducts));
+    return this.productEntitesStore.pipe(select(selectAllProducts));
   }
 
   private getBestSellersIds(): Observable<string[]> {
-    return this.store.pipe(select(fromProduct.selectBestSellersIdsState));
+    return this.bestSellersStore.pipe(select(selectBestSellersIdsState));
   }
 }
