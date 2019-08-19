@@ -40,6 +40,8 @@ describe('Driver | Magento | Category | CategoryService', () => {
       categoryService.get(category.id).subscribe((result) => {
         expect(result.id).toEqual(category.id);
         expect(result.name).toEqual(category.name);
+        expect(result.total_products).toEqual(category.total_products);
+        expect(result.children_count).toEqual(category.children_count);
       });
 
       const op = controller.expectOne(GetACategory);
@@ -52,9 +54,9 @@ describe('Driver | Magento | Category | CategoryService', () => {
             id: category.id,
             name: category.name,
             products: {
-              total_count: 0
+              total_count: category.total_products
             },
-            children_count: 1,
+            children_count: category.children_count,
             children: {
               id: null,
               level: null,

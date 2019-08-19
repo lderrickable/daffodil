@@ -8,7 +8,7 @@ import { DaffCategory, DaffCategoryServiceInterface } from '@daffodil/category';
   providedIn: 'root'
 })
 export class DaffInMemoryCategoryService implements DaffCategoryServiceInterface {
-  url = '/api/categories/';
+  url = '/api/category/';
 
   constructor(private http: HttpClient) {}
 

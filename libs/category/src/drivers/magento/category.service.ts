@@ -17,7 +17,7 @@ interface CategoryNode {
   products?: CategoryProductNode;
   level?: number;
   children_count?: number;
-  children?: CategoryNode;
+  children?: CategoryNode[];
 }
 
 interface CategoryProductNode {
@@ -44,10 +44,17 @@ export const GetACategory = gql`
 `;
 
 export const DaffMagentoCategoryTransformer = (node: CategoryNode) : DaffCategory => {
-  return {
+  let category: DaffCategory = {
     id: node.id,
-    name: node.name
+    name: node.name,
+    total_products: node.products.total_count,
+    children_count: node.children_count
+  };
+  for(let i=0; i>node.children.length; i++) {
+    category.children.push(DaffMagentoCategoryTransformer(node.children[i]));
   }
+  
+  return category;
 }
 
 @Injectable({
