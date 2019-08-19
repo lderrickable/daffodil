@@ -1,11 +1,14 @@
 import { DaffCategoryActionTypes, DaffCategoryActions } from '../actions/category.actions';
+import { DaffCategory } from '../models/category';
 
 export interface State {
+  category: DaffCategory,
   loading: boolean,
   errors: string[]
 }
 
 export const initialState: State = {
+  category: null,
   loading: false,
   errors: []
 };
@@ -15,7 +18,7 @@ export function reducer(state = initialState, action: DaffCategoryActions): Stat
     case DaffCategoryActionTypes.CategoryLoadAction:
       return {...state, loading: true};
     case DaffCategoryActionTypes.CategoryLoadSuccessAction:
-      return {...state, loading: false};
+      return {...state, loading: false, category: action.payload};
     case DaffCategoryActionTypes.CategoryLoadFailureAction:
       return {...state, 
         loading: false, 

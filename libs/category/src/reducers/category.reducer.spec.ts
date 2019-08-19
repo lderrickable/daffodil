@@ -65,6 +65,10 @@ describe('Category | Category Reducer', () => {
     it('sets loading to false', () => {
       expect(result.loading).toEqual(false);
     });
+
+    it('sets category to the payload', () => {
+      expect(result.category).toEqual(category);
+    });
   });
 
   describe('when CategoryLoadFailureAction is triggered', () => {

@@ -12,10 +12,6 @@ export class DaffInMemoryCategoryService implements DaffCategoryServiceInterface
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<DaffCategory[]> {
-    return this.http.get<DaffCategory[]>(this.url);
-  }
-
   get(categoryId: string): Observable<DaffCategory> {
     return this.http.get<DaffCategory>(this.url + categoryId);
   }
