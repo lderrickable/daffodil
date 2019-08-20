@@ -6,12 +6,13 @@ import { cold } from 'jasmine-marbles';
 import { DaffCategoryFactory } from '@daffodil/category/testing';
 
 import { DaffCategoryFacade } from './category.facade';
-import { State, reducers } from '../reducers';
 import { DaffCategoryLoad, DaffCategoryLoadFailure, DaffCategoryLoadSuccess } from '../actions/category.actions';
 import { DaffCategory } from '@daffodil/category';
+import { categoryReducers } from '../reducers/category-reducers';
+import { CategoryReducersState } from '../reducers/category-reducers.interface';
 
 describe('DaffCategoryFacade', () => {
-  let store: MockStore<Partial<State>>;
+  let store: MockStore<Partial<CategoryReducersState>>;
   let facade: DaffCategoryFacade;
   let categoryFactory: DaffCategoryFactory = new DaffCategoryFactory();
   let category: DaffCategory;
@@ -20,7 +21,7 @@ describe('DaffCategoryFacade', () => {
     TestBed.configureTestingModule({
       imports:[
         StoreModule.forRoot({
-          category: combineReducers(reducers),
+          category: combineReducers(categoryReducers),
         })
       ],
       providers: [

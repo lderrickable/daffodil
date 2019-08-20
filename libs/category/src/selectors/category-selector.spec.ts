@@ -4,12 +4,14 @@ import { StoreModule, combineReducers, Store, select } from "@ngrx/store";
 import { DaffCategoryFactory } from '@daffodil/category/testing';
 
 import { DaffCategoryLoadSuccess } from "../actions/category.actions";
-import * as fromCategory from './index';
+import { DaffCategorySelectors } from './category.selector';
 import { DaffCategory } from "../models/category";
+import { CategoryReducersState } from "../reducers/category-reducers.interface";
+import { categoryReducers } from "../reducers/category-reducers";
 
-describe('selectCategoryState', () => {
+describe('DaffCategorySelectors', () => {
 
-  let store: Store<fromCategory.State>;
+  let store: Store<CategoryReducersState>;
   const categoryFactory: DaffCategoryFactory = new DaffCategoryFactory();
   let mockCategory: DaffCategory;
 
@@ -17,7 +19,7 @@ describe('selectCategoryState', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({
-          category: combineReducers(fromCategory.reducers),
+          category: combineReducers(categoryReducers),
         })
       ]
     });
@@ -33,7 +35,7 @@ describe('selectCategoryState', () => {
     describe('selectCategory', () => {
 
       it('selects the category state', () => {
-        store.pipe(select(fromCategory.selectCategory)).subscribe((categoryState) => {
+        store.pipe(select(DaffCategorySelectors.selectCategory)).subscribe((categoryState) => {
           expect(categoryState).toEqual(mockCategory);
         });
       });
@@ -42,7 +44,7 @@ describe('selectCategoryState', () => {
     describe('selectCategoryLoading', () => {
 
       it('selects the loading state of the category', () => {
-        store.pipe(select(fromCategory.selectCategoryLoading)).subscribe((categoryLoadingState) => {
+        store.pipe(select(DaffCategorySelectors.selectCategoryLoading)).subscribe((categoryLoadingState) => {
           expect(categoryLoadingState).toEqual(false);
         });
       });
@@ -51,7 +53,7 @@ describe('selectCategoryState', () => {
     describe('selectCategoryErrors', () => {
 
       it('returns the selected category id', () => {
-        store.pipe(select(fromCategory.selectCategoryErrors)).subscribe((categoryErrors) => {
+        store.pipe(select(DaffCategorySelectors.selectCategoryErrors)).subscribe((categoryErrors) => {
           expect(categoryErrors).toEqual([]);
         });
       });

@@ -5,8 +5,9 @@ import { Store, select, Action } from '@ngrx/store';
 import { DaffStoreFacade } from '@daffodil/core';
 
 import { DaffCategory } from '../models/category';
-import * as fromCategory from '../reducers/index';
 import { DaffCategoryModule } from '../category.module';
+import { DaffCategorySelectors } from '../selectors/category.selector';
+import { CategoryReducersState } from '../reducers/category-reducers.interface';
 
 @Injectable({
   providedIn: DaffCategoryModule
@@ -25,10 +26,10 @@ export class DaffCategoryFacade implements DaffStoreFacade<Action> {
    */
   errors$: Observable<string[]>;
 
-  constructor(private store: Store<fromCategory.State>) {
-    this.category$ = this.store.pipe(select(fromCategory.selectCategory));
-    this.loading$ = this.store.pipe(select(fromCategory.selectCategoryLoading));
-    this.errors$ = this.store.pipe(select(fromCategory.selectCategoryErrors));
+  constructor(private store: Store<CategoryReducersState>) {
+    this.category$ = this.store.pipe(select(DaffCategorySelectors.selectCategory));
+    this.loading$ = this.store.pipe(select(DaffCategorySelectors.selectCategoryLoading));
+    this.errors$ = this.store.pipe(select(DaffCategorySelectors.selectCategoryErrors));
   }
 
   /**
