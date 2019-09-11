@@ -10,6 +10,7 @@
 // @daffodil/branding
 @import 'daff-branding-theme';
 
+@import "~prism-themes/themes/prism-vs.css";
 @import "../app/content/homepage/component/homepage-theme.scss";
 @import "../app/content/pwa/components/feature-comparison/feature-comparison-theme";
 @import "../app/content/pwa/pages/pwa/pwa-theme";
