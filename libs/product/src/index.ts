@@ -22,5 +22,6 @@ export { DaffProductDriver } from './drivers/injection-tokens/product-driver.tok
 
 export { DaffProductGridFacade } from './facades/product-grid/product-grid.facade';
 export { DaffProductFacade } from './facades/product/product.facade';
+export { DaffBestSellersFacade } from './facades/best-sellers/best-sellers.facade';
 
 export * from './drivers/magento/public_api';
