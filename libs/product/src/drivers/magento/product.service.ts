@@ -47,6 +47,6 @@ export class DaffMagentoProductService implements DaffProductServiceInterface<Da
   //todo: add actual getBestSellers apollo call for Magento.
   //todo: move to a different bestsellers module.
   getBestSellers(): Observable<DaffProductUnion[]> {
-    return of(null);
+    return of([]);
   }
 }
