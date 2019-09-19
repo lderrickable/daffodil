@@ -17,7 +17,7 @@ export class DaffNewsletterEffects<T extends DaffNewsletterSubmission, V>{
 
   @Effect()
   trySubmission$: Observable<any> = this.actions$.pipe(ofType(DaffNewsletterActionTypes.NewsletterSubscribeAction),
-    switchMap((action: DaffNewsletterSubscribe) =>
+    switchMap((action: DaffNewsletterSubscribe<T>) =>
       this.driver.send(action.payload).pipe(
         map((resp: V) => {
           return new DaffNewsletterSuccessSubscribe();
